@@ -1,0 +1,85 @@
+.navbar-collapse {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-collapse a {
+    font-size: 18px;
+}
+
+.text-center {
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+.sever-khung {
+    position: relative;
+}
+
+.text-sever-sub {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.text-sever-sub h3 {
+    font-size: 20px;
+}
+
+.text-center p {
+    color: rgb(2, 2, 2, 0.3);
+    font-size: 20px;
+}
+
+.content-shoese {
+    background-color: rgb(210, 205, 205);
+    padding-top: 10px;
+}
+
+.order-online-text {
+    text-align: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.order-online-text p {
+    font-size: 30px;
+    color: rgb(12, 12, 12, 0.3);
+}
+
+.footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 17px;
+}
+
+@media screen and (max-width: 767.98px) {
+    .navbar-collapse {
+        display: none;
+    }
+    .sever-khung {
+        margin-right: 0;
+        padding-bottom: 20px;
+    }
+    .sever-khung img{
+        width: 100%;
+    }
+    .text-sever-sub {
+        bottom: 20px;
+    }
+    .order-online-text p {
+        font-size: 18px;
+    }
+    .order-online-text h2 {
+        font-size: 30px;
+    }
+}

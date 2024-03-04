@@ -1,0 +1,54 @@
+.text-center {
+    margin: 20px 0;
+}
+
+.shoes-serviece {}
+
+.shoes-serviece-item {
+    position: relative;
+ width: 100%;
+}
+
+.shoes-serviece-item img {
+    width: 100%;
+}
+
+.service-text {
+    position: absolute;
+    bottom: 0;
+    background-color: rgb(189, 183, 183, 0.5);
+    width: 100%;
+    color: white;
+}
+.text-center p{
+    font-size: 20px;
+}
+.Combo-huge-content {
+    background: rgb(196, 193, 193);
+    padding: 10px 0;
+}
+.order-img {
+
+}
+.order-img img {
+    width: 100%;
+}
+.order-img-sub {}
+.order-img-sub img {
+    width: 100%;
+}
+.order-content{
+    background-color: rgb(196, 193, 193);
+}
+.footer {
+    background-color: black;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    margin-top: 30px;
+}
+@media screen and (max-width: 768px) {
+    .shoes-serviece-item{
+        margin: 20px 0;
+    }
+}

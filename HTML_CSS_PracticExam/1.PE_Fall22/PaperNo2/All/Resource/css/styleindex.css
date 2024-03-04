@@ -1,0 +1,110 @@
+.header img {
+    margin-right: 100px;
+}
+
+.top-dishes {
+    margin-top: 100px;
+}
+
+.row {}
+
+.top-dishes {
+    margin-bottom: 30px;
+}
+
+.top-dishes-content {
+    font-size: 20px;
+    padding-right: 0;
+
+}
+
+.top-dishes-img {
+    text-align: right;
+    margin-right: 100px;
+}
+
+.top-dishes-content h1 {
+    color: orange;
+}
+
+.top-dishes-content-name {
+    background-color: rgb(140, 244, 244);
+    padding: 0;
+}
+
+.top-dishes-content-name h3:first-child {
+    color: orange;
+    border-bottom: 5px solid rgb(54, 243, 230);
+}
+
+.top-dishes-content-name img {
+    width: 30%;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+.Nha-hang {
+    font-size: 20px;
+    margin-bottom: 20px;
+
+}
+
+.Nha-hang h1 {
+    text-align: center;
+    color: orange;
+    margin-bottom: 20px;
+}
+
+.Nha-hang-img {}
+
+.Nha-hang-img img {
+    width: 50%;
+    height: 450px;
+    margin-top: 20px;
+}
+
+.Nha-hang-img img:first-child {
+    padding-right: 0;
+    width: 40%;
+    margin-left: 7%;
+}
+
+.Nha-hang-img img:last-child {
+    padding-left: 0;
+}
+
+.menu-content {
+    font-size: 20px;
+}
+
+.menu-content h1 {
+    color: orange;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.menu-img {
+    text-align: center;
+}
+.menu-img img{
+    width: 50%;;
+}
+.footer {
+    background-color: aquamarine;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+@media screen and (max-width: 768px) {
+  .top-dishes-img{
+    text-align: center;
+    margin: 0;
+  }
+  .top-dishes-img img{
+    width: 100%;
+  }
+  .top-dishes-content-name{
+    text-align: center;
+  }
+ 
+}

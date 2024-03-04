@@ -1,0 +1,148 @@
+*{
+   margin: 0;
+}
+.header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.header-menu {}
+
+.header-menu ul {
+   display: flex;
+   list-style: none;
+   gap: 20px;
+}
+
+.header-menu a {
+   text-decoration: none;
+   font-weight: bold;
+   color: rgb(40, 178, 228);
+}
+
+.header-logo {}
+
+.header-logo img {
+   width: 50%;
+   
+}
+
+.header-search {}
+
+.header-search button {
+   background-color: orange;
+   color: white;
+}
+
+.Banner {
+   display: flex;
+}
+
+.Banner img {
+   width: 50%;
+   
+}
+
+.Best-seller {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: flex-start;
+}
+
+.Best-seller h1 {
+   color: red;
+   text-align: center;
+   width: 100%;
+   margin-top: 0;
+   margin-bottom: 20px;
+}
+
+.Best-seller-img,
+.Best-seller-content {
+   width: 50%;
+}
+.Best-seller-content {
+  
+}
+
+.Best-seller-content h2 {
+   color: rgb(40, 178, 228);
+   font-size: 30px;
+}
+.Best-seller-content span {
+   color: orange;
+}
+.gift-infor {
+   display: flex;
+   align-items: center;
+}
+.ssd-samsum, .tainghe {
+   color: rgb(40, 178, 228);
+   margin-right: 120px;
+   font-weight: bold;
+}
+
+.ssd-samsum img {
+   width: 200px;
+}
+.tainghe img {
+   width: 200px;
+}
+.ssd-samsum p, .tainghe p {
+   width: 300px;
+}
+
+
+.gift-infor {}
+
+.ssd-samsum {}
+
+.tainghe {}
+
+.Sale-off {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+.Sale-off h1 {
+   color: red;
+   width: 100%;
+   text-align: center;
+   margin-bottom: 20px;
+   margin-top: 0;
+}
+.Sale-off img {
+   width: 300px;
+}
+
+.product {
+   width: 250px;
+   height: 250px;
+   margin: 10px;
+   box-shadow: 0 0px 10px 1px rgb(123, 121, 121);
+   padding-bottom: 4px;
+   
+}
+.product img{
+   width: 250px;
+   height: 250px;
+}
+
+.productname {
+   background-color: orange;
+   padding: 10px;
+   color: white;
+}
+
+.fotter {
+   background-color: black;
+   margin-top: 50px;
+   color: white;
+   text-align: center;
+   padding-bottom: 20px;
+   line-height: 2;
+}
+
+.copy {}

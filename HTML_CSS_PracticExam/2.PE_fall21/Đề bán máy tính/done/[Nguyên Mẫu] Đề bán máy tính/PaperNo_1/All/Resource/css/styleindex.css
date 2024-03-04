@@ -1,0 +1,128 @@
+body{
+    margin: 0;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    color: orange;
+    font-style: italic;
+}
+
+.header-left {
+    margin-left: 40px;
+}
+
+.header-img {}
+
+.header-img img {
+    width: 70%;
+
+}
+
+.header-search {
+    margin-right: 2%;
+}
+
+.header-search button {
+    background-color: black;
+    color: white;
+}
+
+.banner {
+    height: 600px;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+}
+
+.Body-content {
+    display: flex;
+    height: 1400px;
+}
+
+.menu {
+    width: 400px;
+    background-color: rgb(56, 55, 55);
+    margin-right: 40px;
+}
+
+.menu ul {
+    color: white;
+    list-style: none;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 20px 20px;
+}
+
+.menu li:hover {
+    background-color: rgb(17, 195, 148);
+}
+
+.menu li:first-child {
+    background: rgb(17, 195, 195);
+}
+
+.Sale-off {
+    flex: 1;
+}
+
+.Sale-off h1 {
+    text-align: center;
+    margin: 40px;
+    color: rgb(17, 195, 195);
+}
+
+.sale-off-product-duoi,
+.sale-off-product-tren {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    gap: 40px;
+    margin-right: 40px;
+}
+
+.sale-off-product-duoi img,
+.sale-off-product-tren img {
+    width: 100%;
+}
+
+.sale-off-product-tren {
+    margin-bottom: 50px;
+}
+
+.Product-sale-off {
+    box-shadow: 0 0 8px 0 black;
+    border-radius: 9px;
+    padding: 40px 20px;
+    font-weight: 600;
+}
+
+.Product-sale-off span {
+    color: orangered;
+}
+.Product-sale-off div{
+    background-color: rgb(244, 161, 6);
+    width: 100px;
+    padding: 20px 10px;
+    border-radius: 15px;
+    color: white;
+    margin: 0 auto;
+}
+
+.sale-off-product-duoi {}
+
+.footer {
+    background-color:rgb(20, 207, 207) ;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 18px
+}

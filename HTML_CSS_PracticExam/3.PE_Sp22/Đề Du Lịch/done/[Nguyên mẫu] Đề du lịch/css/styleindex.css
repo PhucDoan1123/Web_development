@@ -1,0 +1,106 @@
+.navbar-nav a {
+    font-weight: 500;
+}
+
+.Baner {}
+
+.Banner-img img {
+    width: 100%;
+}
+
+.favorite-place-content {
+    color: orange;
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 5px solid rgb(8, 171, 168);
+    margin-bottom: 20px;
+}
+
+.favorite-places-img {
+    display: flex;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+.favorite-places-img img {
+    width: 25%;
+    height: 97px;
+}
+
+.text-content {
+    text-align: center;
+    color: rgb(20, 202, 202);
+    margin: 20px 0;
+}
+
+.Hottel {
+    text-align: center;
+}
+
+.Hotel-img {
+    width: 100%;
+    position: relative;
+    margin: 10px 0;
+}
+
+.Hotel-img img {
+    width: 100%;
+}
+
+.Hotel-content {
+    position: absolute;
+    bottom: 0;
+    color: white;
+    width: 100%;
+    background-color: rgb(132, 129, 129, 0.5);
+}
+
+.table {
+    font-weight: 500;
+    text-align: center;
+
+}
+
+.table th {
+    color: green;
+    text-align: center;
+
+}
+
+.table td {
+    color: orange;
+}
+
+.footer {
+    background-color: rgb(14, 142, 142);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.famous-hottle-span {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .favorite-places {
+        margin-top: 20px;
+    }
+
+    .famous-hottle {
+        display: none;
+    }
+
+    .famous-hottle-span {
+        display: block;
+        font-size: 25px;
+    }
+
+    .Vung-tau-Imperial {
+        display: none;
+    }
+
+    .Hotel-img {
+        margin: 20px 0;
+    }
+}

@@ -1,0 +1,165 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.header-logo {}
+
+.header-logo img {
+    width: 50%;
+    margin-left: 30px;
+}
+
+.header-menu {}
+
+.header-menu ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-menu a {
+    text-decoration: none;
+    color: rgb(11, 179, 179);
+}
+
+.header-search {}
+
+.header-search button {
+    background-color: black;
+    color: white;
+}
+
+
+.Baner {
+    display: flex;
+    justify-content: center;
+}
+
+.Baner img {
+    width: 45%;
+}
+
+.Tourist-content {}
+
+.Tourist-content h1 {
+    text-align: center;
+    color: rgb(11, 179, 179);
+}
+
+.Tourist-content p {
+    font-style: italic;
+    font-size: 20px;
+    color: orange;
+    text-align: justify;
+    padding: 0 10px;
+}
+
+.form-book-tour {
+    width: 500px;
+    border: 1px solid rgb(6, 249, 249);
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.tour-from {}
+
+.from-header {
+    background-color: rgb(16, 190, 175);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    gap: 10px;
+}
+
+.Thanh-ngang {
+    width: 80px;
+    margin: 0;
+    border: 1px solid white;
+}
+
+.form-body {
+    background-color: rgb(214, 211, 211);
+    padding: 10px 0;
+
+}
+
+.form-content {
+    display: flex;
+    font-size: 16px;
+    margin-bottom: 20px;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.lable {
+    width: 120px;
+}
+
+.form-content input {
+    height: 25px;
+    width: 200px;
+
+}
+
+
+.Select-tour {
+    height: 30px;
+    width: 200px;
+}
+
+.price {
+    flex: 1;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: rgb(255, 149, 0);
+}
+
+.form-footer {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.form-footer button {
+    background-color: rgb(255, 150, 4);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+}
+
+.book-tour {
+    background-color: green;
+    padding: 15px 0;
+    font-size: 17px;
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+}
+
+
+.footer {
+    background-color: rgb(37, 198, 223);
+    color: white;
+    padding: 20px;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.footer h5 {
+    text-align: center;
+    font-size: 18px;
+}
+
+.footer-tren {
+    display: flex;
+    justify-content: center;
+    gap: 500px;
+}

@@ -1,0 +1,32 @@
+.form-input {
+    width: 500px;
+}
+
+.input-item {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.input-item input {
+    height: 30px;
+    width: 300px;
+}
+
+.input-item {}
+
+.lable {
+    width: 80px;
+    padding-left: 10px;
+}
+.button{
+}
+.button button{
+    margin-left: 200px;
+    height: 30px;
+    width: 50px;
+    font-weight: 600;
+}
+.item-last {
+    margin-bottom: 5px;
+}

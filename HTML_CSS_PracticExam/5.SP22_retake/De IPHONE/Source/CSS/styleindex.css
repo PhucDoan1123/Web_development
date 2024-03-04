@@ -1,0 +1,152 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.header-menu {
+    margin-left: 100px;
+}
+
+.header-menu ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    font-weight: 600;
+}
+
+.header-menu a {
+    text-decoration: none;
+    color: black;
+}
+
+.header-img {
+    margin-right: 200px;
+}
+
+.header-img img {
+    width: 50%;
+}
+
+.header-search {
+    margin-right: 5%;
+}
+
+.header-search button {
+    background-color: black;
+    color: white;
+}
+
+.Banner {
+    width: 100%;
+    height: 700px;
+
+}
+
+.Banner img {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 1400px;
+}
+
+.list-of-product {
+    width: 400px;
+    background-color: rgb(155, 153, 153);
+    margin-right: 40px;
+}
+
+.list-product {
+    margin-bottom: 30px;
+
+}
+
+.list-product h2 {
+    margin: 0;
+}
+
+.list-header {
+    background-color: rgb(255, 119, 0);
+    color: white;
+    text-align: center;
+}
+
+
+.list-body {}
+
+.list-body {
+    font-size: 18px;
+}
+
+.list-body li {
+    list-style-type: circle;
+    margin-bottom: 10px;
+}
+
+.list-body li:nth-child(6) {
+    list-style: none;
+}
+
+.Best-seller {
+    flex: 1;
+}
+
+.text-content {
+    text-align: center;
+    color: rgb(40, 200, 200);
+    margin: 30px 0;
+}
+
+.best-seller-content {
+    border-radius: 3px;
+    text-align: justify;
+    font-size: 20px;
+    line-height: 30px;
+    box-shadow: 0 0 8px 0 black;
+    height: 650px;
+    padding: 10px;
+}
+
+.best-seller-content p {
+    padding-right: 20px;
+}
+
+.best-seller-content img {
+    float: left;
+    width: 40%;
+    padding-right: 10px;
+}
+
+.Sale-off {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    height: 500px;
+}
+
+.Sale-off-product {
+    width: 100%;
+    width: 350px;
+    height: 90%;
+    box-shadow: 0 0 8px 0 rgb(104, 101, 101);
+    text-align: center;
+    border-radius: 8px;
+}
+
+.Sale-off-product img {
+    width: 100%;
+}
+.red-text{
+    color: red;
+}
+
+.footer {
+    background-color: rgb(47, 45, 45);
+    text-align: center;
+    color: white;
+    padding: 10px 0;
+}
