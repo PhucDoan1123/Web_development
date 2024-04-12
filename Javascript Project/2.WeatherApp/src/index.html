@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <title>Simple wether app</title>
+</head>
+
+<body class="bg-gray-500">
+    <div
+        class="md:mt-6 card text-xl p-6 pb-14 h-auto bg-gradient-to-br from-green-400 to-blue-400 md:w-1/3 m-auto rounded-xl">
+        <div class="search-bar flex justify-center gap-6 outline-none items-center">
+            <input class="input-bar md:text-sm outline-none p-3 border-none rounded-xl flex-1" type="text"
+                placeholder="Enter city name" spellcheck="false">
+            <button class="search-button bg-white rounded-full p-3"><img class="w-5 h-5" src="images/search.png"
+                    alt=""></button>
+        </div>
+        <div class="grid grid-cols-1 text-center text-3xl  text-white">
+            <img class="weather-image border-none  m-auto" src="images/clouds.png" alt="weather image">
+            <div class="temperature font-bold my-4 text-4xl">--</div>
+            <div class="city-name font-medium">--</div>
+        </div>
+        <diV class="detail flex text-lg text-white items-center justify-between px-5 mt-12">
+            <div class="col flex gap-2 items-center">
+                <img class="wind-image w-16 h-14" src="images/wind.png" alt="wind">
+                <div>
+                    <p class="wind">-- km/h</p>
+                    <p>Wind Speed</p>
+                </div>
+            </div>
+            <div class="col flex gap-2 items-center">
+                <img class="humidity-image w-14 h-10" src="images/humidity.png" alt="humidity">
+                <div>
+                    <p class="humidity">--%</p>
+                    <p>Humidity</p>
+                </div>
+            </div>
+        </diV>
+    </div>
+    <script src="index.js">
+    </script>
+
+</body>
+
+</html>
