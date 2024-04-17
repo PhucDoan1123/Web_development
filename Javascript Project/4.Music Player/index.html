@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/styleSheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="player">
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <!-- Header -->
+            <header>
+                <h4>Now playing:</h4>
+                <h2>String 57th & 9th</h2>
+            </header>
+
+            <!-- CD -->
+            <div class="cd">
+                <div class="cd-thumb">
+                </div>
+            </div>
+
+            <!-- Control -->
+            <div class="control">
+                <div class="btn btn-repeat">
+                    <i class="fas fa-redo"></i>
+                </div>
+                <div class="btn btn-prev">
+                    <i class="fas fa-step-backward"></i>
+                </div>
+                <div class="btn btn-toggle-play">
+                    <i class="fas fa-pause icon-pause"></i>
+                    <i class="fas fa-play icon-play"></i>
+                </div>
+                <div class="btn btn-next">
+                    <i class="fas fa-step-forward"></i>
+                </div>
+                <div class="btn btn-random">
+                    <i class="fas fa-random"></i>
+                </div>
+            </div>
+
+            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+
+            <audio id="audio" src=""></audio>
+        </div>
+
+        <!-- Playlist -->
+        <div class="playlist">
+        </div>
+    </div>
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+        const heading = $('header h2');
+        const cdThumb = $('.cd-thumb');
+        const audio = $('#audio');
+        const cd = $('.cd');
+
+        const playBtn = $('.btn-toggle-play')
+
+        const player = $('.player')
+
+        const progress = $('#progress')
+
+        const next = $('.btn-next')
+
+        const prev = $('.btn-prev')
+
+        const randomBtn = $('btn-random')
+
+        const app = {
+
+            currentIndex: 0,
+            isPlay: false,
+            isRadom: false,
+            song: [
+                {
+                    name: 'Axl _amp_ Arth-Criminal',
+                    singer: 'Tu',
+                    path: './assets/music/Axl _amp_ Arth-Criminal.mp3',
+                    image: './assets/img/amp_ Arth-Criminal.jpeg'
+                },
+                {
+                    name: 'Carter Vail-Computer Love Song',
+                    singer: 'Hung',
+                    path: './assets/music/Carter Vail-Computer Love Song.mp3',
+                    image: './assets/img/Carter Vail-Computer Love Song.jpg'
+                }, {
+                    name: 'Sam Opoku-Okay',
+                    singer: 'Tu',
+                    path: './assets/music/Sam Opoku-Okay.mp3',
+                    image: './assets/img/Sam Opoku-Okay.jpg'
+                }, {
+                    name: 'The Devil Music Co.-It Is Well',
+                    singer: 'Tu',
+                    path: './assets/music/The Devil Music Co.-It Is Well.mp3',
+                    image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
+                },
+                {
+                    name: 'The Devil Music Co.-It Is Well2',
+                    singer: 'Tu',
+                    path: './assets/music/The Devil Music Co.-It Is Well.mp3',
+                    image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
+                },
+                {
+                    name: 'The Devil Music Co.-It Is Well3',
+                    singer: 'Tu',
+                    path: './assets/music/The Devil Music Co.-It Is Well.mp3',
+                    image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
+                },
+                {
+                    name: 'The Devil Music Co.-It Is Well4',
+                    singer: 'Tu',
+                    path: './assets/music/The Devil Music Co.-It Is Well.mp3',
+                    image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
+                },
+                {
+                    name: 'The Devil Music Co.-It Is Well5',
+                    singer: 'Tu',
+                    path: './assets/music/The Devil Music Co.-It Is Well.mp3',
+                    image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
+                },
+            ],
+            render: function () {
+                const htmls = this.song.map((song, index) => {
+                    return `
+            <div class="song ${index === this.currentIndex ? "active" : ""}"
+                data-index="${index}">
+                <div class="thumb"
+                    style="background-image: url('${song.image}')">
+                </div>
+                <div class="body">
+                    <h3 class="title">${song.name}</h3>
+                    <p class="author">${song.singer}</p>
+                </div>
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+        `;
+                });
+
+                $('.playlist').innerHTML = htmls.join('\n');
+            },
+
+            defineProperties: function () {
+                Object.defineProperty(this, 'currentSong', {
+                    get: function () {
+                        return this.song[this.currentIndex];
+                    }
+                });
+            },
+
+            handleEvent: function () {
+                const cdWith = cd.offsetWidth;
+                const _this = this;
+
+                const cdThumbAimate = cdThumb.animate([
+                    { transform: 'rotate(360deg)' }
+                ], {
+                    duration: 10000, // Duration of the animation in milliseconds (1 second)
+                    iterations: Infinity // Number of times the animation should repeat (in this case, infinitely)
+                });
+
+                cdThumbAimate.pause()
+
+
+
+
+                document.onscroll = function () {
+                    const scrollTop = document.documentElement.scrollTop || window.scrollY
+                    const newCdwith = cdWith - scrollTop
+
+                    cd.style.width = newCdwith > 0 ? newCdwith + "px" : 0
+                    cd.style.opacity = newCdwith / cdWith
+
+
+                }
+
+                playBtn.onclick = function () {
+                    if (_this.isPlay) {
+
+                        audio.pause()
+                    } else {
+                        audio.play()
+                    }
+                }
+                audio.onplay = function () {
+                    _this.isPlay = true
+                    player.classList.add('playing')
+                    cdThumbAimate.play()
+                }
+
+                audio.onpause = function () {
+                    _this.isPlay = false
+                    player.classList.remove('playing')
+                    cdThumbAimate.pause()
+
+                }
+
+                audio.ontimeupdate = function () {
+                    if (audio.duration) {
+                        const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
+                        progress.value = progressPercent
+                    }
+                }
+
+                progress.onchange = function (e) {
+                    const seekTime = audio.duration / 100 * e.target.value;
+                    audio.currentTime = seekTime
+                }
+
+                next.onclick = function () {
+                    _this.nextSong()
+                    audio.play()
+                }
+
+                prev.onclick = function () {
+                    _this.prevSong()
+                    audio.play()
+                }
+
+                randomBtn.onclick = function (e) {
+                    randomBtn.classList.toggle('active'); // Toggles the 'active' class on the random element based on the value of _this.isRandom
+                };
+
+            },
+
+            loadCurrentSong: function () {
+
+                heading.textContent = this.currentSong.name
+                cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
+                audio.src = this.currentSong.path
+            },
+
+            nextSong: function () {
+                this.currentIndex++
+                if (this.currentIndex >= this.song.length) {
+                    this.currentIndex = 0
+                }
+                this.loadCurrentSong()
+            },
+
+            prevSong: function () {
+                this.currentIndex--
+                if (this.currentIndex < 0) {
+                    this.currentIndex = this.song.length - 1
+                }
+                this.loadCurrentSong()
+            },
+
+
+            start: function () {
+
+                this.defineProperties()
+
+                this.handleEvent()
+
+                this.loadCurrentSong()
+
+                this.render();
+            }
+        }
+        app.start()
+    </script>
+</body>
+
+
+
+</html>
