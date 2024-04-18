@@ -9,7 +9,6 @@
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/css/styleSheet.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -60,6 +59,8 @@
     <script>
         const $ = document.querySelector.bind(document);
         const $$ = document.querySelectorAll.bind(document);
+        const PLAYER_STORAGE_KEY = 'F8_PLAYER'
+
         const heading = $('header h2');
         const cdThumb = $('.cd-thumb');
         const audio = $('#audio');
@@ -75,13 +76,21 @@
 
         const prev = $('.btn-prev')
 
-        const randomBtn = $('btn-random')
+        const randomBtn = $('.btn-random')
+
+        const repeatBtn = $('.btn-repeat')
+
+        const playlist = $('.playlist')
+
 
         const app = {
 
             currentIndex: 0,
             isPlay: false,
             isRadom: false,
+            isPrepeat: false,
+            config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
+
             song: [
                 {
                     name: 'Axl _amp_ Arth-Criminal',
@@ -130,6 +139,10 @@
                     image: './assets/img/The Devil Music Co.-It Is Well.jpeg'
                 },
             ],
+            setConfig: function (key, value) {
+                this.config[key] = value;
+                localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
+            },
             render: function () {
                 const htmls = this.song.map((song, index) => {
                     return `
@@ -163,19 +176,19 @@
             handleEvent: function () {
                 const cdWith = cd.offsetWidth;
                 const _this = this;
-
+                //Sử lí animated xoay trong đĩa hát
                 const cdThumbAimate = cdThumb.animate([
                     { transform: 'rotate(360deg)' }
                 ], {
-                    duration: 10000, // Duration of the animation in milliseconds (1 second)
-                    iterations: Infinity // Number of times the animation should repeat (in this case, infinitely)
+                    duration: 10000,
+                    iterations: Infinity
                 });
 
                 cdThumbAimate.pause()
 
 
 
-
+                //sử lí khi scroll bài hết màng hình
                 document.onscroll = function () {
                     const scrollTop = document.documentElement.scrollTop || window.scrollY
                     const newCdwith = cdWith - scrollTop
@@ -185,7 +198,7 @@
 
 
                 }
-
+                //Sử lí khi nhắn play button
                 playBtn.onclick = function () {
                     if (_this.isPlay) {
 
@@ -194,47 +207,102 @@
                         audio.play()
                     }
                 }
+                //sử lí khi play bài hát
                 audio.onplay = function () {
                     _this.isPlay = true
                     player.classList.add('playing')
                     cdThumbAimate.play()
                 }
-
+                //sử lí khi pause bài hát
                 audio.onpause = function () {
                     _this.isPlay = false
                     player.classList.remove('playing')
                     cdThumbAimate.pause()
 
                 }
-
+                //Sử lí thanh progress khi thay đổi thời gian phát 
                 audio.ontimeupdate = function () {
                     if (audio.duration) {
                         const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
                         progress.value = progressPercent
                     }
                 }
-
+                //Xử lí khi chọn đoạn sẽ phát trong song
                 progress.onchange = function (e) {
                     const seekTime = audio.duration / 100 * e.target.value;
                     audio.currentTime = seekTime
                 }
 
+              
+
+                //Sử lí khi nhắn nút newt song
+
                 next.onclick = function () {
-                    _this.nextSong()
-                    audio.play()
-                }
+                    if (_this.isRadom) {
+                        _this.playRandomSong()
 
+                    } else {
+                        _this.nextSong()
+                    }
+                    audio.play()
+                    _this.render()
+                    _this.scrollToActiveSong()
+                }
+                //Sử lí khi nhắn nút prev song
                 prev.onclick = function () {
-                    _this.prevSong()
+                    if (_this.isRadom) {
+                        _this.playRandomSong()
+
+                    } else {
+                        _this.prevSong()
+                    }
                     audio.play()
+                    //Xứ lí khi đến bài hát trên playList
+                    _this.render()
+                    //Xử lí khi scroll đến bài hát đang phát trên playlist
+                    _this.scrollToActiveSong()
+                }
+                //Xử lí khi nhắn vào reapeat button
+                repeatBtn.onclick = function (e) {
+                    _this.isPrepeat = !_this.isPrepeat
+                    repeatBtn.classList.toggle('active', _this.isPrepeat)
                 }
 
-                randomBtn.onclick = function (e) {
-                    randomBtn.classList.toggle('active'); // Toggles the 'active' class on the random element based on the value of _this.isRandom
+                //Xử lí khi nhắn vào random button
+                randomBtn.onclick = function () {
+                    _this.isRadom = !_this.isRadom
+                    randomBtn.classList.toggle('active', _this.isRadom)
+
                 };
+                //Xử lí khi end bài hát
+                audio.onended = function () {
+                    if (_this.isPrepeat) {
+                        audio.play()
+                        return
+                    }
+                    next.click()
+                }
+
+                //Lắng nghe lick playlist
+                playlist.onclick = function (e) {
+                    const songNode = e.target.closest('.song:not(.active)')
+                    //XỬ lý khi click vào song
+                    if (songNode || e.target.closest('.option')) {
+                        if (songNode) {
+                            _this.currentIndex = Number(songNode.dataset.index)
+                            _this.loadCurrentSong()
+                            audio.play()
+                            _this.render()
+                        }
+                        //xu li khi nhan vao option button
+                        if (e.target.closest('.option')) {
+
+                        }
+                    }
+                }
 
             },
-
+            //Xử lí load current song
             loadCurrentSong: function () {
 
                 heading.textContent = this.currentSong.name
@@ -257,7 +325,23 @@
                 }
                 this.loadCurrentSong()
             },
+            playRandomSong: function () {
+                let newIndex
+                do {
+                    newIndex = Math.floor(Math.random() * this.song.length)
+                } while (newIndex === this.currentIndex)
+                this.currentIndex = newIndex
+                this.loadCurrentSong()
 
+            },
+            scrollToActiveSong: function () {
+                setTimeout(() => {
+                    $('.song.active').scrollIntoView({
+                        behavior: 'smooth',
+                        block: this.currentIndex === 0 ? 'end' : 'nearest'
+                    })
+                }, 200)
+            },
 
             start: function () {
 
