@@ -59,7 +59,7 @@
     <script>
         const $ = document.querySelector.bind(document);
         const $$ = document.querySelectorAll.bind(document);
-        const PLAYER_STORAGE_KEY = 'F8_PLAYER'
+        const PLAYER_STORAGE_KEY = 'PHUC_PLAYER'
 
         const heading = $('header h2');
         const cdThumb = $('.cd-thumb');
@@ -90,7 +90,6 @@
             isRadom: false,
             isPrepeat: false,
             config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
-
             song: [
                 {
                     name: 'Axl _amp_ Arth-Criminal',
@@ -233,7 +232,7 @@
                     audio.currentTime = seekTime
                 }
 
-              
+
 
                 //Sử lí khi nhắn nút newt song
 
@@ -252,7 +251,6 @@
                 prev.onclick = function () {
                     if (_this.isRadom) {
                         _this.playRandomSong()
-
                     } else {
                         _this.prevSong()
                     }
@@ -262,18 +260,19 @@
                     //Xử lí khi scroll đến bài hát đang phát trên playlist
                     _this.scrollToActiveSong()
                 }
-                //Xử lí khi nhắn vào reapeat button
+
                 repeatBtn.onclick = function (e) {
-                    _this.isPrepeat = !_this.isPrepeat
-                    repeatBtn.classList.toggle('active', _this.isPrepeat)
-                }
-
-                //Xử lí khi nhắn vào random button
-                randomBtn.onclick = function () {
-                    _this.isRadom = !_this.isRadom
-                    randomBtn.classList.toggle('active', _this.isRadom)
-
+                    _this.isPrepeat = !_this.isPrepeat; // Toggles the isPrepeat property
+                    _this.setConfig('isPrepeat', _this.isPrepeat); // Sets the isPrepeat property in some configuration
+                    repeatBtn.classList.toggle('active', _this.isPrepeat); // Toggles the 'active' class based on the value of isPrepeat
                 };
+
+                randomBtn.onclick = function () {
+                    _this.isRadom = !_this.isRadom; // Toggles the isRadom property
+                    _this.setConfig('isRandom', _this.isRadom); // Sets the isRandom property in some configuration
+                    randomBtn.classList.toggle('active', _this.isRadom); // Toggles the 'active' class based on the value of isRandom
+                };
+
                 //Xử lí khi end bài hát
                 audio.onended = function () {
                     if (_this.isPrepeat) {
@@ -308,6 +307,11 @@
                 heading.textContent = this.currentSong.name
                 cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
                 audio.src = this.currentSong.path
+            },
+
+            loadConfig: function () {
+                this.isRadom = this.config.isRadom
+                this.isPrepeat = this.config.isPrepeat
             },
 
             nextSong: function () {
@@ -345,13 +349,24 @@
 
             start: function () {
 
+                //Gan cau hinh tu config vao ung dung
+                this.loadConfig()
+
+                //Dinh nghia cac thuoc tinh cho object
                 this.defineProperties()
 
+                //Lang nghe/ xu li cac su kien (DOM event)
                 this.handleEvent()
 
+                //Tai thong tin bai hat dau tien vao UI khi chay ung dung
                 this.loadCurrentSong()
 
+                //Render playList
                 this.render();
+
+                //Hien thi trang thai ban dau cua button repeat $ random
+                randomBtn.classList.toggle('active', this.isRadom)
+                repeatBtn.classList.toggle('active', this.isPrepeat)
             }
         }
         app.start()
