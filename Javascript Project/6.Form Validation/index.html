@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label for="fullname" class="form-label">Tên đầy đủ</label>
-                <input id="fullname" name="fullname" type="text" placeholder="VD: Sơn Đặng" class="form-control">
+                <input id="fullname" name="fullname" type="text" placeholder="VD: Khánh Tùng" class="form-control">
                 <span class="form-message"></span>
             </div>
 
@@ -52,12 +52,21 @@
             errorSelector: '.form-message',
             rules: [
                 Validator.isRequired('#fullname'),
+                Validator.isRequired('#email'),
+                Validator.isRequired('#password_confirmation'),
                 Validator.isEmail('#email'),
                 Validator.minLength('#password', 6),
                 Validator.isConfirmed('#password_confirmation', function () {
                     return document.querySelector('#form-1 #password').value
-                }),
-            ]
+                }, 'Mật khẩu nhập lại không chính xác'),
+
+            ],
+
+            
+            onSubmit: function (data) {
+                //Call API
+                console.log(data);
+            }
         });
     </script>
 </body>
