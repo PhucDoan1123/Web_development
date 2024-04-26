@@ -41,6 +41,30 @@
                 <span class="form-message"></span>
             </div>
 
+
+            <div class="form-group">
+                <label for="avatar" class="form-label">Upload your avatar</label>
+                <input id="avatar" name="avatar" type="file" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="gender" class="form-label">Gender</label>
+                <div class="gender-radio">
+                    <input name="gender" type="checkbox" value="male" class="form-control"> Nam
+                    <input name="gender" type="checkbox" value="female" class="form-control"> Nu
+                    <input name="gender" type="checkbox" value="other" class="form-control"> Other
+                </div>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group"> <label for="province" class="form-label">Province</label> <select name="province"
+                    id="province">
+                    <option value="">-- Chon Tỉnh/TP --</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="Hải Phòng">Hải Phòng</option>
+                </select> <span class="form-message"></span> </div>
+
+
             <button class="form-submit">Đăng ký</button>
         </form>
 
@@ -49,11 +73,15 @@
     <script>
         Validator({
             form: '#form-1',
+            formGroupSelector: '.form-group',
             errorSelector: '.form-message',
             rules: [
                 Validator.isRequired('#fullname'),
                 Validator.isRequired('#email'),
+                Validator.isRequired('#avatar'),
                 Validator.isRequired('#password_confirmation'),
+                Validator.isRequired('input[name="gender"]'),
+                Validator.isRequired('#province'),
                 Validator.isEmail('#email'),
                 Validator.minLength('#password', 6),
                 Validator.isConfirmed('#password_confirmation', function () {
@@ -61,8 +89,6 @@
                 }, 'Mật khẩu nhập lại không chính xác'),
 
             ],
-
-            
             onSubmit: function (data) {
                 //Call API
                 console.log(data);

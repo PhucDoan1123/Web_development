@@ -49,6 +49,17 @@ html {
     flex-direction: column;
 }
 
+
+.gender-radio {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+    gap: 10px;
+    font-size: medium;
+}
+
+
 .form-label,
 .form-message {
     text-align: left;

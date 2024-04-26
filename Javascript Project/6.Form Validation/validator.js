@@ -1,25 +1,49 @@
 function Validator(option) {
+  function getParent(element, selector) {
+    while (element.parentElement) {
+      if (element.parentElement.matches(selector)) {
+        return element.parentElement;
+      }
+      element = element.parentElement;
+    }
+  }
+
   var selectorRules = {};
 
-  // Function to perform validation
-  const validate = (inputElement, rule) => {
-    var errorElement = inputElement.parentElement.querySelector(
-      option.errorSelector
-    );
+  const validate = (formElement, inputElement, rule) => {
+    if (!inputElement) return false; // Return false if inputElement is null or undefined
+
+    var parentFormGroup = getParent(inputElement, option.formGroupSelector);
+
+    if (!parentFormGroup) return false; // Return false if parentFormGroup is not found
+
+    var errorElement = parentFormGroup.querySelector(option.errorSelector);
     var errorMessage;
     var rules = selectorRules[rule.selector];
 
     for (var i = 0; i < rules.length; ++i) {
-      errorMessage = rules[i](inputElement.value);
+      switch (inputElement.type) {
+        case "radio":
+        case "checkbox":
+          var checkedElement = formElement.querySelector(
+            rule.selector + ":checked"
+          );
+          errorMessage = rules[i](checkedElement);
+          break;
+
+        default:
+          errorMessage = rules[i](inputElement.value);
+      }
+
       if (errorMessage) break;
     }
 
     if (errorMessage) {
       errorElement.innerText = errorMessage;
-      inputElement.parentElement.classList.add("invalid");
+      parentFormGroup.classList.add("invalid");
     } else {
       errorElement.innerText = "";
-      inputElement.parentElement.classList.remove("invalid");
+      parentFormGroup.classList.remove("invalid");
     }
     return !errorMessage;
   };
@@ -37,7 +61,7 @@ function Validator(option) {
       //Go through all of rules and do validate
       option.rules.forEach(function (rule) {
         var inputElement = formElement.querySelector(rule.selector);
-        var isValid = validate(inputElement, rule);
+        var isValid = validate(formElement, inputElement, rule);
         if (!isValid) {
           isFormValid = false;
         }
@@ -55,7 +79,28 @@ function Validator(option) {
             values,
             input
           ) {
-            values[input.name] = input.value;
+            switch (input.type) {
+              case "radio":
+                values[input.name] = formElement.querySelector(
+                  'input[name="' + input.name + '"]:checked'
+                ).value;
+              case "checkbox":
+                if (!input.matches(":checked")) {
+                  values[input.name] = "";
+                  return values;
+                }
+                if (!Array.isArray(values[input.name])) {
+                  values[input.name] = [];
+                }
+                values[input.name].push(input.value);
+                break;
+              case "file":
+                values[input.name] = input.files;
+                break;
+              default:
+                values[input.name] = input.value;
+            }
+
             return values;
           },
           {});
@@ -67,7 +112,6 @@ function Validator(option) {
         }
       }
     };
-
     option.rules.forEach(function (rule) {
       // Save the rules for each input
       if (selectorRules[rule.selector]) {
@@ -76,23 +120,28 @@ function Validator(option) {
         selectorRules[rule.selector] = [rule.test];
       }
 
-      var inputElement = formElement.querySelector(rule.selector);
+      // Select all elements that match the selector
+      var inputElements = formElement.querySelectorAll(rule.selector);
 
-      if (inputElement) {
+      // Iterate over each selected element
+      inputElements.forEach(function (inputElement) {
         // Handle blur event
         inputElement.onblur = function () {
-          validate(inputElement, rule);
+          validate(formElement, inputElement, rule);
         };
 
         // Handle input event
         inputElement.oninput = function () {
-          var errorElement = inputElement.parentElement.querySelector(
-            option.errorSelector
-          );
+          var errorElement = getParent(
+            inputElement,
+            option.formGroupSelector
+          ).querySelector(option.errorSelector);
           errorElement.innerText = "";
-          inputElement.parentElement.classList.remove("invalid");
+          getParent(inputElement, option.formGroupSelector).classList.remove(
+            "invalid"
+          );
         };
-      }
+      });
     });
   }
 }
@@ -103,7 +152,7 @@ Validator.isRequired = function (selector, message) {
   return {
     selector: selector,
     test: function (value) {
-      return value.trim() ? undefined : message || "Please require this field";
+      return value ? undefined : message || "Please require this field";
     },
   };
 };
