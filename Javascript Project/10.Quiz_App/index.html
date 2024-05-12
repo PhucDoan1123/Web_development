@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="fontawesome-free-6.5.2-web/css/all.css">
 </head>
 
 <body>
     <div class="quiz-wrapper">
         <div class="quiz-header">
             <div class="quiz-timer">
-                <i>O</i>
+                <i class="fa-regular fa-clock"></i>
                 <div class="quiz-timer-text">
                     <span>Time remaining</span>
-                    <p>10:00:00</p>
+                    <p id="timer">10:00:00</p>
                 </div>
             </div>
             <button id="quiz-submit">SUBMIT</button>
@@ -23,14 +24,14 @@
         <div class="quiz-container">
             <div class="quiz-question">
                 <h5>Question 1 of 10</h5>
-                <p>
+                <p id="quiz-title">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.?
                 </p>
                 <ul>
-                    <li><span>A.</span><span>ádffdsafasdfasdfadsfasdf</span></li>
-                    <li><span>B.</span><span>ádffdsafasdfasdfadsfasdf</span></li>
-                    <li><span>C.</span><span>ádffdsafasdfasdfadsfasdf</span></li>
-                    <li><span>D.</span><span>ádffdsafasdfasdfadsfasdf</span></li>
+                    <li><span>A.</span><span class="answer-item">ádffdsafasdfasdfadsfasdf</span></li>
+                    <li><span>B.</span><span class="answer-item">ádffdsafasdfasdfadsfasdf</span></li>
+                    <li><span>C.</span><span class="answer-item">ádffdsafasdfasdfadsfasdf</span></li>
+                    <li><span>D.</span><span class="answer-item">ádffdsafasdfasdfadsfasdf</span></li>
                 </ul>
             </div>
             <div class="quiz-progress">
@@ -41,8 +42,321 @@
                 <span id="progress-text">9/10</span>
             </div>
         </div>
+        <div class="quiz-number">
+            <button id="quizPrevBtn">Prev</button>
+            <ul>
+
+
+
+            </ul>
+            <button id="quizNextBtn">Next</button>
+        </div>
     </div>
     <script src="main.js"></script>
+    <script>
+        // Database
+        let questions = [
+            {
+                quiz_id: 1,
+                question:
+                    "You can learn a lot about the local _______ by talking to local people.",
+                answers: ["territory", "area", "land", "nation"],
+            },
+            {
+                quiz_id: 2,
+                question:
+                    "It's good to have someone to ________ you when you are visiting a new place.",
+                answers: ["lead", "take", "guide", "bring"],
+            },
+            {
+                quiz_id: 3,
+                question:
+                    "When you ______ your destination, your tour guide will meet you at the airport.",
+                answers: ["arrive", "reach", "get", "achieve"],
+            },
+            {
+                quiz_id: 4,
+                question: "It can be quite busy here during the tourist ______",
+                answers: ["season", "phase", "period", "stage"],
+            },
+            {
+                quiz_id: 5,
+                question:
+                    "Make sure you _______ a hotel before you come to our island, especially in the summer.",
+                answers: ["book", "keep", "put", "buy"],
+            },
+            {
+                quiz_id: 6,
+                question: "Captain Cook discovered Australia on a _______ to the Pacific.",
+                answers: ["vacation", "travel", "cruise", "voyage"],
+            },
+            {
+                quiz_id: 7,
+                question:
+                    " Most tourist attractions in London charge an admission ________.",
+                answers: ["fare", "ticket", "fee", "pay"],
+            },
+            {
+                quiz_id: 8,
+                question: "The hotel where we are _______ is quite luxurious.",
+                answers: ["living", "existing", "remaining", "staying"],
+            },
+            {
+                quiz_id: 9,
+                question: "Is English an ________ language in your country?",
+                answers: ["mother", "official", "living", "old"],
+            },
+            {
+                quiz_id: 10,
+                question: "He spoke a ______ of French that we found hard to understand.",
+                answers: ["slang", "jargon", "dialect", "language"],
+            },
+        ];
+        const results = [
+            {
+                quiz_id: 1,
+                answer: "area",
+            },
+            {
+                quiz_id: 3,
+                answer: "reach",
+            },
+            {
+                quiz_id: 2,
+                answer: "guide",
+            },
+            {
+                quiz_id: 4,
+                answer: "season",
+            },
+            {
+                quiz_id: 5,
+                answer: "book",
+            },
+            {
+                quiz_id: 6,
+                answer: "voyage",
+            },
+            {
+                quiz_id: 7,
+                answer: "fee",
+            },
+            {
+                quiz_id: 8,
+                answer: "staying",
+            },
+            {
+                quiz_id: 9,
+                answer: "official",
+            },
+            {
+                quiz_id: 10,
+                answer: "dialect",
+            },
+        ];
+
+        // quizApp
+
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        const quizTimer = $('#timer')
+        const quizSubmit = $('#quiz-submit')
+        const quizProgress = $('#progress')
+        const quizProgressText = $('#progress-text')
+        const quizCount = $('.quiz-question h5')
+        const quizAnswers = $$('.quiz-question ul li')
+        const quizAnswersItem = $$('.answer-item')
+        const quizTitle = $('#quiz-title')
+        let quizQuestions = $$('.quiz-number ul li')
+        const quizQuestionsList = $('.quiz-number ul')
+        const prevBtn = $('#quizPrevBtn')
+        const nextBtn = $('#quizNextBtn')
+        let currentIndex = null;
+        let listSubmit = []
+        let listResult = []
+        let isSubmit = false
+        function randomArray(arr) {
+            return arr.sort(() => Math.random() - Math.random());
+        };
+
+        const quiz = {
+            renderRandomQuestion() {
+                questions = randomArray(questions)
+                questions.forEach(q => {
+                    q.answers = randomArray(q.answers)
+                })
+            },
+            renderResult() {
+                if (listResult[currentIndex] === listSubmit[currentIndex]) {
+                    quizAnswers.forEach((item) => {
+                        item.classList.remove('incorrect')
+                    })
+                    quizAnswers[listResult[currentIndex]].classList.add('active')
+
+                } else {
+                    quizAnswers.forEach((item) => {
+                        item.classList.remove('active')
+                        item.classList.remove('incorrect')
+                    })
+                    quizAnswers[listResult[currentIndex]].classList.add('active')
+                    quizAnswers[listSubmit[currentIndex]].classList.add('incorrect')
+                }
+            },
+            handleSubmit() {
+                quizSubmit.addEventListener('click', () => {
+                    const progressLength = listSubmit.filter((item) => item >= 0)
+                    if (progressLength.length === questions.length) {
+                        questions.forEach((item, index) => {
+                            const result = results.find((r) => r.quiz_id === item.quiz_id)
+                            if (questions[index].answers[listSubmit[index]] === result.answer) {
+                                listResult[index] = listSubmit[index]
+
+                            } else {
+                                quizQuestions[index].classList.add('incorrect')
+                                listResult[index] = item.answers.indexOf(result.answer)
+                            }
+                        })
+                        isSubmit = true;
+                    } else {
+                        alert('You must answer all question before submit')
+                    }
+                })
+            },
+
+            handleQuestionList() {
+                quizQuestions.forEach((item, index) => {
+
+                    item.addEventListener('click', () => {
+                        item.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                        quizQuestions.forEach((item) => {
+                            item.classList.remove('active')
+                        })
+                        item.classList.add('active')
+                        currentIndex = index;
+                        this.renderCurrentQuestion()
+                        quizAnswers.forEach((item) => {
+                            item.classList.remove('active')
+                        })
+                        const selected = listSubmit[currentIndex]
+                        selected >= 0 && quizAnswers[selected].click()
+                        if (isSubmit) {
+                            this.renderResult()
+                        }
+                    })
+                })
+
+                quizQuestions[0].click()
+            },
+            handleAnswer() {
+                quizAnswers.forEach((answer, index) => {
+                    answer.addEventListener('click', () => {
+                        if (isSubmit) return
+                        quizAnswers.forEach((item) => {
+                            item.classList.remove('active')
+                        })
+                        answer.classList.add('active')
+                        quizQuestions[currentIndex].classList.add('selected')
+                        listSubmit[currentIndex] = index
+                        this.handleProgress()
+
+                    })
+                })
+            },
+            renderCurrentQuestion() {
+                quizCount.innerText = `Question ${currentIndex + 1} of ${questions.length}`
+                quizTitle.innerText = questions[currentIndex].question
+                quizAnswersItem.forEach((answer, index) => {
+                    answer.innerText = questions[currentIndex].answers[index]
+                })
+            },
+            handleNext() {
+                nextBtn.addEventListener('click', () => {
+                    ++currentIndex;
+                    if (currentIndex > questions.length - 1) {
+                        currentIndex = 0
+                    }
+                    quizQuestions[currentIndex].click()
+
+                })
+            },
+            handlePrev() {
+                prevBtn.addEventListener('click', () => {
+                    --currentIndex;
+                    if (currentIndex < 0) {
+                        currentIndex = questions.length - 1
+                    }
+                    quizQuestions[currentIndex].click()
+                })
+            },
+            handleProgress() {
+                const r = quizProgress.getAttribute('r')
+                const progressLength = listSubmit.filter((item) => item >= 0)
+                quizProgress.style = `stroke-dasharray: ${(2 * Math.PI * r * progressLength.length) / questions.length} 9999;`
+                quizProgressText.innerHTML = `${progressLength.length}/${questions.length}`
+
+            },
+            renderProgress() {
+                quizProgress.style = `stroke-dasharray: 0 9999;`
+                quizProgressText.innerHTML = `0/${questions.length}`
+            },
+            renderQuestionLists() {
+                let render = ""
+                questions.forEach((question, index) => {
+                    render += `<li>${index + 1}</i>`
+                })
+                quizQuestionsList.innerHTML = render;
+                quizQuestions = $$('.quiz-number ul li')
+            },
+            renderTimer(timeInSeconds) {
+
+
+                updateTimerDisplay(timeInSeconds);
+
+                var countdownInterval = setInterval(function () {
+                    timeInSeconds--;
+
+                    updateTimerDisplay(timeInSeconds);
+                    if (timeInSeconds <= 0) {
+                        clearInterval(countdownInterval);
+                        // Thêm hành động khi thời gian kết thúc ở đây
+                    }
+                }, 1000);
+
+                // Hàm cập nhật hiển thị của timer
+                function updateTimerDisplay(timeInSeconds) {
+                    var minutes = Math.floor(timeInSeconds / 60);
+                    var seconds = timeInSeconds % 60;
+                    // Định dạng hiển thị phút và giây thành chuỗi "mm:ss"
+                    var displayString = ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+                    // Gán giá trị của displayString vào phần tử timer
+                    quizTimer.textContent = displayString;
+                }
+
+            },
+            handle() {
+                this.handleProgress()
+                this.handleQuestionList();
+                this.handleAnswer()
+                this.handleNext()
+                this.handlePrev()
+                this.handleSubmit()
+            },
+            render() {
+                this.renderQuestionLists();
+                this.renderTimer(15 * 60)
+                this.renderProgress()
+            },
+            start() {
+                this.renderRandomQuestion()
+                this.render()
+                this.handle()
+
+            },
+        }
+
+        quiz.start()
+    </script>
 </body>
 
 </html>
