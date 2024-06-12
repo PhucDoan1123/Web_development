@@ -7,7 +7,6 @@ import Profile from '~/pages/Profile';
 import Upload from '~/pages/Upload';
 import Search from '~/pages/Search';
 
-console.log(HeaderOnly);
 
 const publicRoutes = [
     { path: '/', component: Home },
