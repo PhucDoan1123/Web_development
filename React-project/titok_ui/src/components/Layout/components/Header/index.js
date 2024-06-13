@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 //Icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faSpinner, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faPlus, faSpinner, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Tippy from '@tippyjs/react/headless';
 
@@ -52,7 +52,9 @@ function Header() {
                     </div>
                 </Tippy>
                 <div className={cx('action')}>
-                    <Button text>Upload</Button>
+                    <Button text leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                        Upload
+                    </Button>
                     <Button primary>Login</Button>
                 </div>
             </div>
