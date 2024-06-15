@@ -5,6 +5,7 @@
     --search-button-width: 52px;
 
     display: flex;
+    width: 100%;
     height: var(--default-layout-header-height);
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px;
     justify-content: center;
@@ -13,6 +14,7 @@
 .inner {
     height: 100%;
     width: var(--default-layout-header-width);
+    padding: 0 var(--default-layout-header-horizontal-spacer);
     display: flex;
     justify-content: space-between;
     align-items: center;

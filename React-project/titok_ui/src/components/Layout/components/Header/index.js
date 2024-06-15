@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Children, useEffect, useState } from 'react';
 
 // Icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +22,8 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import AccountItems from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import MenuItems from '~/components/Popper/Menu/MenuItems';
+import { type } from '@testing-library/user-event/dist/type';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +31,20 @@ const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAfrica} />,
         title: 'English',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    type: 'language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    code: 'vi',
+                    title: 'Vietnamese',
+                },
+            ],
+        },
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -45,6 +61,15 @@ function Header() {
     const [searchResult, setSearchResult] = useState([]);
 
     useEffect(() => {}, []);
+
+    const handleMenuChange = (menuitem) => {
+        switch (menuitem.type) {
+            case 'language':
+                //handle change language
+                break;
+            default:
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -82,7 +107,7 @@ function Header() {
                         Upload
                     </Button>
                     <Button primary>Login</Button>
-                    <Menu items={MENU_ITEMS}>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
