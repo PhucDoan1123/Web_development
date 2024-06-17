@@ -5,14 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowRightFromBracket,
     faCircleQuestion,
-    faCloudUpload,
     faCoins,
     faEarthAfrica,
     faEllipsisVertical,
     faGear,
     faKeyboard,
     faMagnifyingGlass,
-    faMessage,
     faPlus,
     faSpinner,
     faUser,
@@ -30,6 +28,8 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import AccountItems from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
+import Image from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -142,16 +142,35 @@ function Header() {
                                 interactive
                                 delay={200}
                                 className={cx('tippy-content')}
-                                content="Upload video"
+                                content="Upload"
                                 placement="bottom"
                             >
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <UploadIcon />
                                 </button>
                             </Tippy>
-                            <button className={cx('action-btn')}>
-                                <FontAwesomeIcon icon={faMessage} />
-                            </button>
+                            <Tippy
+                                interactive
+                                delay={200}
+                                className={cx('tippy-content')}
+                                content="Message"
+                                placement="bottom"
+                            >
+                                <button className={cx('action-btn')}>
+                                    <MessageIcon />
+                                </button>
+                            </Tippy>
+                            <Tippy
+                                interactive
+                                delay={200}
+                                className={cx('tippy-content')}
+                                content="Mailbox"
+                                placement="bottom"
+                            >
+                                <button className={cx('action-btn')}>
+                                    <InboxIcon />
+                                </button>
+                            </Tippy>
                         </>
                     ) : (
                         <>
@@ -163,10 +182,11 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 className={cx('user-avatar')}
                                 alt="user"
-                                src="https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/a187c4dfa896a5ea449a4c5d3927b20a~c5_100x100.jpeg?lk3s=a5d48078&nonce=64618&refresh_token=c45ebef8c8af0f7e41e165e76d7773d8&x-expires=1718373600&x-signature=Os%2BfrpsDt%2FSq6RlqiNQlG7jHVJM%3D&shp=a5d48078&shcp=81f88b70"
+                                src="https://p16-sign-va..com/tos-maliva-avt-0068/c9ba9670d1fa16bc31865d6a0012d0da~c5_100x100.jpeg?lk3s=a5d48078&nonce=24513&refresh_token=730637b459daf1fe6bc1617d0d58a20d&x-expires=1718780400&x-signature=iX3Q5Irq8QMn0GJa0CoZeIhusQo%3D&shp=a5d48078&shcp=81f88b70"
+                                // fallBack="https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
                             />
                         ) : (
                             <button className={cx('more-btn')}>
