@@ -17,12 +17,26 @@ function Search() {
     const [searchValues, setSearchValues] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
+    const [loading, setLoading] = useState();
 
     const inputRef = useRef();
 
     useEffect(() => {
-        setSearchResult([1, 2, 4, 4]);
-    }, []);
+        if (!searchValues) {
+            setSearchResult([]);
+            return;
+        }
+
+        setLoading(true);
+
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURI(searchValues)}&type=less`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchResult(res.data);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, [searchValues]);
 
     const handleClear = () => {
         setSearchValues('');
@@ -44,9 +58,10 @@ function Search() {
                 <div className={cx('search-result')} tabIndex={'-1'} {...attrs}>
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Accounts</h4>
-                        <AccountItems />
-                        <AccountItems />
-                        <AccountItems />
+
+                        {searchResult.map((result) => (
+                            <AccountItems key={result.id} data={result} />
+                        ))}
                     </PopperWrapper>
                 </div>
             )}
@@ -61,8 +76,9 @@ function Search() {
                     onFocus={() => setShowResult(true)}
                 />
 
-                {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
-                {!!searchValues && (
+                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+
+                {!!searchValues && !loading && (
                     <button className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faXmarkCircle} />
                     </button>
