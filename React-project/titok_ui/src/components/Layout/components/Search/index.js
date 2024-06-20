@@ -1,6 +1,6 @@
 // Icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faSpinner, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -11,6 +11,11 @@ import classNames from 'classnames/bind';
 import AccountItems from '~/components/AccountItem';
 import { useEffect, useRef, useState } from 'react';
 import { SearchIcon } from '~/components/Icons';
+import useDebounce from '~/hooks/useDebounce';
+
+import * as searchService from '~/aipServices/searchService';
+
+import * as request from '~/utils/request';
 
 const cx = classNames.bind(styles);
 function Search() {
@@ -19,24 +24,27 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState();
 
+    const debounced = useDebounce(searchValues, 500);
+
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!searchValues) {
+        if (!debounced) {
             setSearchResult([]);
             return;
         }
 
-        setLoading(true);
+        const fetchApi = async () => {
+            setLoading(true);
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURI(searchValues)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => setLoading(false));
-    }, [searchValues]);
+            const result = await searchService.search(debounced);
+            setSearchResult(result);
+
+            setLoading(false);
+        };
+
+        fetchApi();
+    }, [debounced]);
 
     const handleClear = () => {
         setSearchValues('');
@@ -48,7 +56,6 @@ function Search() {
         setShowResult(false);
     };
 
-    console.log(searchValues);
     return (
         <HeadlessTippy
             interactive
