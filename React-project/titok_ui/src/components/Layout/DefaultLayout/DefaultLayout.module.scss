@@ -8,6 +8,7 @@
     width: var(--default-layout-header-width);
     display: flex;
     padding: 0 var(--default-layout-header-horizontal-spacer);
+    margin-top: var(--default-layout-header-height);
 }
 
 .content {

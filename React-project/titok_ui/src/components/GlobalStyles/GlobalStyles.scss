@@ -34,7 +34,40 @@ body {
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     color: var(--text-color);
+    overflow-y: overlay;
 }
+
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(100, 100, 100, 0.2);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(100, 100, 100, 0.2);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(200, 200, 200, 0.05);
+  
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(200, 200, 200, 0.05);
+}
+
 
 button,
 input,

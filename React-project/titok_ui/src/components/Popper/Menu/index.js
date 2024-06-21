@@ -1,4 +1,5 @@
-import Tippy from '@tippyjs/react/headless';
+import HeadlessTippy from '@tippyjs/react/headless';
+
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './Menu.module.scss';
@@ -35,7 +36,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     };
 
     return (
-        <Tippy
+        <HeadlessTippy
             interactive
             placement="bottom-end"
             offset={[12, 8]}
@@ -52,7 +53,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                                 }}
                             />
                         )}
-                        {renderItems()}
+                        <div className={cx('menu-body')}> {renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}
@@ -61,7 +62,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
             }}
         >
             {children}
-        </Tippy>
+        </HeadlessTippy>
     );
 }
 
