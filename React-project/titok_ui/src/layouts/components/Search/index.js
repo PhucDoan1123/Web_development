@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { SearchIcon } from '~/components/Icons';
 import useDebounce from '~/hooks/useDebounce';
 
-import * as searchService from '~/aipServices/searchService';
+import * as searchService from '~/services/searchService';
 
 const cx = classNames.bind(styles);
 function Search() {
