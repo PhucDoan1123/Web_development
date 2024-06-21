@@ -15,8 +15,6 @@ import useDebounce from '~/hooks/useDebounce';
 
 import * as searchService from '~/aipServices/searchService';
 
-import * as request from '~/utils/request';
-
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValues, setSearchValues] = useState('');
@@ -29,7 +27,7 @@ function Search() {
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!debounced) {
+        if (!debounced.trim()) {
             setSearchResult([]);
             return;
         }
@@ -45,6 +43,14 @@ function Search() {
 
         fetchApi();
     }, [debounced]);
+
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+
+        if (!searchValue.startsWith(' ')) {
+            setSearchValues(searchValue);
+        }
+    };
 
     const handleClear = () => {
         setSearchValues('');
@@ -79,7 +85,7 @@ function Search() {
                     value={searchValues}
                     placeholder="Search"
                     spellCheck={false}
-                    onChange={(e) => setSearchValues(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
 
@@ -90,7 +96,7 @@ function Search() {
                         <FontAwesomeIcon icon={faXmarkCircle} />
                     </button>
                 )}
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
                     <SearchIcon />
                 </button>
             </div>
